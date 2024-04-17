@@ -50,15 +50,15 @@ contract IntegrationVestingEscrow is IntegrationBase {
    */
   function _warpAndWithdraw(uint256 _timestamp) internal {
     vm.warp(_timestamp);
-    _connextVestingWallet.claim(_vestingEscrow);
-    _connextVestingWallet.release();
+    _veilConnextVestingWallet.claim(_vestingEscrow);
+    _veilConnextVestingWallet.release();
   }
 
   /**
    * @notice Each withdrawal should equally increase the withdrawn amount and the owner's balance
    */
   function _assertOwnerBalance(uint256 _balance) internal {
-    assertApproxEqAbs(_connextVestingWallet.released(), _balance, MAX_DELTA);
+    assertApproxEqAbs(_veilConnextVestingWallet.released(), _balance, MAX_DELTA);
     assertApproxEqAbs(_nextToken.balanceOf(owner), _balance, MAX_DELTA);
   }
 
@@ -66,6 +66,6 @@ contract IntegrationVestingEscrow is IntegrationBase {
    * @notice Assert the connext vesting wallet balance is equal to the given amount
    */
   function _assertWalletBalance(uint256 _balance) internal {
-    assertApproxEqAbs(_nextToken.balanceOf(address(_connextVestingWallet)), _balance, MAX_DELTA);
+    assertApproxEqAbs(_nextToken.balanceOf(address(_veilConnextVestingWallet)), _balance, MAX_DELTA);
   }
 }
